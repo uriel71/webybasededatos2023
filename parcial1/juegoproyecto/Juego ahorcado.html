@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Juego del Ahorcado</title>
+</head>
+<body>
+    <h1>Juego del Ahorcado</h1>
+    <p>Adivina la palabra oculta:</p>
+    <p id="wordDisplay"></p>
+    <p>Letras incorrectas: <span id="wrongGuesses"></span></p>
+    <p>Intentos restantes: <span id="attempts"></span></p>
+    <input type="text" id="guessInput">
+    <button onclick="guessLetter()">Adivinar</button>
+
+    <script>
+        const words = ["javascript", "html", "programador", "luiscarlos", "programas"];
+        let selectedWord = words[Math.floor(Math.random() * words.length)];
+        let wordDisplay = [];
+        let wrongGuesses = [];
+        let attempts = 6;
+
+        // Inicializar la palabra a adivinar con guiones bajos
+        for (let i = 0; i < selectedWord.length; i++) {
+            wordDisplay.push("_");
+        }
+
+        // Funcion para mostrar la palabra a adivinar
+        function displayWord() {
+            document.getElementById("wordDisplay").textContent = wordDisplay.join(" ");
+        }
+
+        // Funcion para adivinar una letra
+        function guessLetter() {
+            const guess = document.getElementById("guessInput").value.toLowerCase();
+            document.getElementById("guessInput").value = "";
+
+            if (selectedWord.includes(guess)) {
+                // La letra está en la palabra
+                for (let i = 0; i < selectedWord.length; i++) {
+                    if (selectedWord[i] === guess) {
+                        wordDisplay[i] = guess;
+                    }
+                }
+            } else {
+                // La letra no está en la palabra
+                wrongGuesses.push(guess);
+                attempts--;
+
+                // Mostrar letras incorrectas
+                document.getElementById("wrongGuesses").textContent = wrongGuesses.join(" ");
+            }
+
+            // Actualizar intentos restantes
+            document.getElementById("attempts").textContent = attempts;
+
+            // Mostrar la palabra a adivinar actualizada
+            displayWord();
+
+            // Comprobar si el jugador gano o perdio
+            if (wordDisplay.join("") === selectedWord) {
+                alert("Ganaste, La palabra es " + selectedWord);
+            } else if (attempts === 0) {
+                alert("Perdiste, La palabra era " + selectedWord);
+            }
+        }
+
+        // Mostrar la palabra inicialmente
+        displayWord();
+    </script>
+</body>
+</html>
