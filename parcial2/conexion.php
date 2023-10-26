@@ -1,8 +1,13 @@
 <?php
 
-    $server = "localhost";
-    $user = "root";
-    $password = "12345678"; // si tienes XAMPP es $password = ""
+$server = "localhost";
+$user = "root";
+$pasword = "";
+$basededatos ="cetis107"; 
 
-    //conexion
-    $conexion
+$conexion = new mysqli($server, $user, $pasword, $basededatos);
+
+if($conexion->connect_error){
+    die("Fallo la conexion " . $conexion->connect_error);
+}
+?>
